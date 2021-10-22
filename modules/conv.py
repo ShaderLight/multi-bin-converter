@@ -12,7 +12,15 @@ def dec_to_bin(x):
 
     output.reverse()
 
-    return output
+    output_str = ''
+
+    if output[-1] == '-':
+        output_str = output.pop()
+
+    for c in output:
+        output_str += str(c)
+
+    return output_str
 
 
 def bin_to_dec(x):

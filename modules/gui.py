@@ -1,6 +1,8 @@
 import tkinter as tk
 import tkinter.ttk as ttk
 
+import conv as cv
+
 options = ['base-2', 'base-10']
 selection = {}
 
@@ -45,6 +47,12 @@ def rendergui():
 
     confirm_btn = tk.Button(window, text='Convert', command=convert)
     confirm_btn.pack()
+
+    global output_box
+
+    output_box = tk.Text(window, height=2, width = 20)
+    output_box.pack(padx=10, pady=20)
+    output_box.config(state='normal')
     
     window.mainloop()
 
@@ -57,6 +65,11 @@ def get_to_input(event):
 
 def convert():
     input = digit_input.get("1.0", "end-1c")
-    print(input)
+    output = 0
+    if (selection['from'] == 'base-10') and (selection['to'] == 'base-2'):
+        output = cv.dec_to_bin(int(input))
+
+    output_box.delete(1.0, tk.END)
+    output_box.insert(tk.END, output)
 
 rendergui()
