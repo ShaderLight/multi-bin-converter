@@ -68,6 +68,8 @@ def convert():
     output = 0
     if (selection['from'] == 'base-10') and (selection['to'] == 'base-2'):
         output = cv.dec_to_bin(int(input))
+    elif (selection['from'] == 'base-2') and (selection['to'] == 'base-10'):
+        output = cv.bin_to_dec(input)
 
     output_box.delete(1.0, tk.END)
     output_box.insert(tk.END, output)

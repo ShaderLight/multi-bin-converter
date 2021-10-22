@@ -25,13 +25,13 @@ def dec_to_bin(x):
 
 def bin_to_dec(x):
     negative = 1
-    if x[-1] == '-':
-        x.pop()
+    if x[0] == '-':
+        x = x[1:]
         negative = -1
 
     output = 0
     for i in range(len(x)):
-        output += x[i] * 2 ** (len(x)-i-1)
+        output += int(x[i]) * 2 ** (len(x)-i-1)
 
     output *= negative
 
