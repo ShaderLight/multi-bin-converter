@@ -1,3 +1,14 @@
+def dec_to_bin(x, bits=5):
+    if type(x) == float:
+        x_int = int(x)
+        x_frac = abs(x - x_int)
+
+    if x_frac == 0:
+        return dec_to_bin_int(x_int)
+
+    return (dec_to_bin_int(x_int) + '.' + dec_to_bin_frac(x_frac, bits))
+
+
 def dec_to_bin_int(x):
     output = []
     if x == 0:
