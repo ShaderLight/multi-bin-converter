@@ -1,4 +1,4 @@
-def dec_to_bin(x):
+def dec_to_bin_int(x):
     output = []
     if x == 0:
         return [0]
@@ -23,7 +23,7 @@ def dec_to_bin(x):
     return output_str
 
 
-def bin_to_dec(x):
+def bin_to_dec_int(x):
     negative = 1
     if x[0] == '-':
         x = x[1:]
