@@ -36,3 +36,27 @@ def bin_to_dec(x):
     output *= negative
 
     return output
+
+
+def bin_to_dec_frac(x):
+    output = 0
+    for i in range(len(x)):
+        output += int(x[i]) * 2 ** (-1 - i)
+    
+    return output
+
+
+def dec_to_bin_frac(x, bits=5):
+    assert x < 1
+    
+    output = ''
+    while bits > 0:
+        x *= 2
+        if x >= 1:
+            x -= 1
+            output += '1'
+        else:
+            output += '0'
+
+        bits -= 1
+    return output
