@@ -1,12 +1,24 @@
 def dec_to_bin(x, bits=5):
-    if type(x) == float:
-        x_int = int(x)
-        x_frac = abs(x - x_int)
+    x_int = int(x)
+    x_frac = abs(x - x_int)
+
 
     if x_frac == 0:
         return dec_to_bin_int(x_int)
 
     return (dec_to_bin_int(x_int) + '.' + dec_to_bin_frac(x_frac, bits))
+
+
+def bin_to_dec(x):
+    x_split = x.split('.')
+
+    if len(x_split) == 1:
+        return bin_to_dec_int(x_split[0])
+    
+    if x_split[0][0] == '-':
+        return -1 * (abs(bin_to_dec_int(x_split[0])) + bin_to_dec_frac(x_split[1]))
+
+    return bin_to_dec_int(x_split[0]) + bin_to_dec_frac(x_split[1])
 
 
 def dec_to_bin_int(x):
