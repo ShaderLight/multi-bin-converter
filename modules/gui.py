@@ -67,7 +67,7 @@ def convert():
     input = digit_input.get("1.0", "end-1c")
     output = 0
     if (selection['from'] == 'base-10') and (selection['to'] == 'base-2'):
-        output = cv.dec_to_bin(int(input))
+        output = cv.dec_to_bin(float(input))
     elif (selection['from'] == 'base-2') and (selection['to'] == 'base-10'):
         output = cv.bin_to_dec(input)
 
