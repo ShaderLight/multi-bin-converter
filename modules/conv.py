@@ -126,3 +126,12 @@ def bin_add_one_lsb(x):
             return output
 
     raise OverflowError
+
+
+def u2_to_dec(x):
+    x_split = x.split('.')
+
+    try:
+        return -1 * 2 ** (len(x_split[0]) - 1) + bin_to_dec_int(x_split[0][1:]) + bin_to_dec_frac(x_split[1])
+    except IndexError:
+        return -1 * 2 ** (len(x_split[0]) - 1) + bin_to_dec_int(x_split[0][1:])
