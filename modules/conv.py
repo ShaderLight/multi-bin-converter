@@ -1,3 +1,6 @@
+from os import sep
+
+
 def dec_to_bin(x, bits=5):
     x_int = int(x)
     x_frac = abs(x - x_int)
@@ -83,3 +86,43 @@ def dec_to_bin_frac(x, bits=5):
 
         bits -= 1
     return output
+
+
+def bin_to_u2(x):
+    if x[0] == '-':
+        x = inversion(x[1:])
+        
+        return bin_add_one_lsb(x)
+    
+    return '0' + x
+
+
+def inversion(x):
+    output = ''
+    for i in range(len(x)):
+        if x[i] == '0':
+            output += '1'
+        elif x[i] == '1':
+            output += '0'
+        else:
+            output += x[i]
+
+    return output
+
+
+def bin_add_one_lsb(x):
+    sep_index = ['.', x.find('.')]
+    
+    if sep_index[1] == -1:
+        sep_index = [',', x.find(',')]
+
+    for i in range(len(x)):
+        if x[len(x) - i - 1] == '0':
+            output = x[:len(x) - i - 1] + '1' + '0' * len(x[len(x) - i:])
+
+            if sep_index[1] >= 0:
+                output = output[:sep_index[1]] + sep_index[0] + output[sep_index[1] + 1:]
+
+            return output
+
+    raise OverflowError
