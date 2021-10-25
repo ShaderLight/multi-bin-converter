@@ -3,7 +3,7 @@ import tkinter.ttk as ttk
 
 import conv as cv
 
-options = ['base-2', 'base-10']
+options = ['base-2', 'base-10', 'u2']
 selection = {}
 
 def rendergui():
@@ -70,6 +70,16 @@ def convert():
         output = cv.dec_to_bin(float(input))
     elif (selection['from'] == 'base-2') and (selection['to'] == 'base-10'):
         output = cv.bin_to_dec(input)
+    elif (selection['from'] == 'u2') and (selection['to'] == 'base-2'):
+        output = cv.u2_to_dec(input)
+        output = cv.dec_to_bin(output)
+    elif (selection['from'] == 'base-2') and (selection['to'] == 'u2'):
+        output = cv.bin_to_u2(input)
+    elif (selection['from'] == 'u2') and (selection['to'] == 'base-10'):
+        output = cv.u2_to_dec(input)
+    elif (selection['from'] == 'base-10') and (selection['to'] == 'u2'):
+        output = cv.dec_to_bin(float(input))
+        output = cv.bin_to_u2(output)
 
     output_box.delete(1.0, tk.END)
     output_box.insert(tk.END, output)
