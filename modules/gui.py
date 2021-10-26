@@ -96,16 +96,18 @@ def convert():
 
     # From one's comeplement to base-10
     elif (selection['from'] == 'u1') and (selection['to'] == 'base-10'):
-        pass
+        output = cv.u1_to_dec(input)
     
     # From one's comeplement to base-2
     elif (selection['from'] == 'u1') and (selection['to'] == 'base-2'):
-        pass
+        output = cv.u1_to_dec(input)
+        output = cv.dec_to_bin(output)
     
     # From one's comeplement to two's complement
     elif (selection['from'] == 'u1') and (selection['to'] == 'u2'):
-        pass
-
+        output = cv.u1_to_dec(input)
+        output = cv.dec_to_bin(output)
+        output = cv.bin_to_u2(output)
 
     output_box.delete(1.0, tk.END)
     output_box.insert(tk.END, output)

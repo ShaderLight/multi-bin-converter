@@ -14,17 +14,27 @@ def bin_to_dec(x):
 
 def bin_to_u2(x):
     if x[0] == '-':
-        x = inversion('0' + x[1:])
-        
+        if x[1] == '1':
+            x = inversion('0' + x[1:])
+        else:
+            x = inversion(x[1:])
+
         return bin_add_one_lsb(x)
     
+    if x[0] == '0':
+        return x
     return '0' + x
 
 
 def bin_to_u1(x):
     if x[0] == '-':
-        return inversion('0' + x[1:])
-
+        if x[1] == '1':
+            return inversion('0' + x[1:])
+        return inversion(x[1:])
+    
+    if x[0] == '0':
+        return x
+    
     return '0' + x
 
 
@@ -47,9 +57,9 @@ def u2_to_dec(x):
     x_split = x.split('.')
 
     try:
-        return -1 * 2 ** (len(x_split[0]) - 1) + bin_to_dec_int(x_split[0][1:]) + bin_to_dec_frac(x_split[1])
+        return -1 * 2 ** (len(x_split[0]) - 1) * int(x_split[0][0]) + bin_to_dec_int(x_split[0][1:]) + bin_to_dec_frac(x_split[1])
     except IndexError:
-        return -1 * 2 ** (len(x_split[0]) - 1) + bin_to_dec_int(x_split[0][1:])
+        return -1 * 2 ** (len(x_split[0]) - 1) * int(x_split[0][0]) + bin_to_dec_int(x_split[0][1:])
 
 
 # From u1 (one's comeplement) function
@@ -58,9 +68,9 @@ def u1_to_dec(x):
     x_split = x.split('.')
 
     try:
-        return -1 * 2 ** (len(x_split[0])) + bin_to_dec_int(x_split[0][1:]) + bin_to_dec_frac(x_split[1])
+        return -1 * (2 ** (len(x_split[0]) - 1) - 1) * int(x_split[0][0]) + bin_to_dec_int(x_split[0][1:]) + bin_to_dec_frac(x_split[1])
     except IndexError:
-        return -1 * 2 ** (len(x_split[0])) + bin_to_dec_int(x_split[0][1:])
+        return -1 * (2 ** (len(x_split[0]) - 1) - 1) * int(x_split[0][0]) + bin_to_dec_int(x_split[0][1:])
 
 
 # --- Other functions ---
@@ -69,7 +79,7 @@ def u1_to_dec(x):
 def dec_to_bin_int(x):
     output = []
     if x == 0:
-        return [0]
+        return '0'
     elif x < 0:
         output.append('-')
         x = x * (-1)
