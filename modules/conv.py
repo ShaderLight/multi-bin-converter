@@ -1,13 +1,4 @@
-def dec_to_bin(x, bits=5):
-    x_int = int(x)
-    x_frac = abs(x - x_int)
-
-
-    if x_frac == 0:
-        return dec_to_bin_int(x_int)
-
-    return (dec_to_bin_int(x_int) + '.' + dec_to_bin_frac(x_frac, bits))
-
+# From bin (base-2) functions
 
 def bin_to_dec(x):
     x_split = x.split('.')
@@ -20,6 +11,60 @@ def bin_to_dec(x):
 
     return bin_to_dec_int(x_split[0]) + bin_to_dec_frac(x_split[1])
 
+
+def bin_to_u2(x):
+    if x[0] == '-':
+        x = inversion('0' + x[1:])
+        
+        return bin_add_one_lsb(x)
+    
+    return '0' + x
+
+
+def bin_to_u1(x):
+    if x[0] == '-':
+        return inversion('0' + x[1:])
+
+    return '0' + x
+
+
+# From dec (base-10) function
+
+def dec_to_bin(x, bits=5):
+    x_int = int(x)
+    x_frac = abs(x - x_int)
+
+
+    if x_frac == 0:
+        return dec_to_bin_int(x_int)
+
+    return (dec_to_bin_int(x_int) + '.' + dec_to_bin_frac(x_frac, bits))
+
+
+# From u2 (two's complement) function
+
+def u2_to_dec(x):
+    x_split = x.split('.')
+
+    try:
+        return -1 * 2 ** (len(x_split[0]) - 1) + bin_to_dec_int(x_split[0][1:]) + bin_to_dec_frac(x_split[1])
+    except IndexError:
+        return -1 * 2 ** (len(x_split[0]) - 1) + bin_to_dec_int(x_split[0][1:])
+
+
+# From u1 (one's comeplement) function
+
+def u1_to_dec(x):
+    x_split = x.split('.')
+
+    try:
+        return -1 * 2 ** (len(x_split[0])) + bin_to_dec_int(x_split[0][1:]) + bin_to_dec_frac(x_split[1])
+    except IndexError:
+        return -1 * 2 ** (len(x_split[0])) + bin_to_dec_int(x_split[0][1:])
+
+
+# --- Other functions ---
+# Integral part converting
 
 def dec_to_bin_int(x):
     output = []
@@ -61,6 +106,8 @@ def bin_to_dec_int(x):
     return output
 
 
+# Decimal part converting
+
 def bin_to_dec_frac(x):
     output = 0
     for i in range(len(x)):
@@ -85,30 +132,7 @@ def dec_to_bin_frac(x, bits=5):
     return output
 
 
-def bin_to_u2(x):
-    if x[0] == '-':
-        x = inversion('0' + x[1:])
-        
-        return bin_add_one_lsb(x)
-    
-    return '0' + x
-
-
-def bin_to_u1(x):
-    if x[0] == '-':
-        return inversion('0' + x[1:])
-
-    return '0' + x
-
-
-def u1_to_dec(x):
-    x_split = x.split('.')
-
-    try:
-        return -1 * 2 ** (len(x_split[0])) + bin_to_dec_int(x_split[0][1:]) + bin_to_dec_frac(x_split[1])
-    except IndexError:
-        return -1 * 2 ** (len(x_split[0])) + bin_to_dec_int(x_split[0][1:])
-
+# Binary operations
 
 def inversion(x):
     output = ''
@@ -139,12 +163,3 @@ def bin_add_one_lsb(x):
             return output
 
     raise OverflowError
-
-
-def u2_to_dec(x):
-    x_split = x.split('.')
-
-    try:
-        return -1 * 2 ** (len(x_split[0]) - 1) + bin_to_dec_int(x_split[0][1:]) + bin_to_dec_frac(x_split[1])
-    except IndexError:
-        return -1 * 2 ** (len(x_split[0]) - 1) + bin_to_dec_int(x_split[0][1:])
