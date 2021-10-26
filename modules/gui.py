@@ -3,8 +3,9 @@ import tkinter.ttk as ttk
 
 import conv as cv
 
-options = ['base-2', 'base-10', 'u2']
+options = ['base-2', 'base-10', 'u2', 'u1']
 selection = {'from': None, 'to': None}
+
 
 def rendergui():
     window = tk.Tk()
@@ -66,20 +67,45 @@ def get_to_input(event):
 def convert():
     input = digit_input.get("1.0", "end-1c")
     output = 'Invalid selection'
+    
+    # From base-10 to base-2
     if (selection['from'] == 'base-10') and (selection['to'] == 'base-2'):
         output = cv.dec_to_bin(float(input))
-    elif (selection['from'] == 'base-2') and (selection['to'] == 'base-10'):
-        output = cv.bin_to_dec(input)
-    elif (selection['from'] == 'u2') and (selection['to'] == 'base-2'):
-        output = cv.u2_to_dec(input)
-        output = cv.dec_to_bin(output)
-    elif (selection['from'] == 'base-2') and (selection['to'] == 'u2'):
-        output = cv.bin_to_u2(input)
-    elif (selection['from'] == 'u2') and (selection['to'] == 'base-10'):
-        output = cv.u2_to_dec(input)
+    
+    # From base-10 to two's complement
     elif (selection['from'] == 'base-10') and (selection['to'] == 'u2'):
         output = cv.dec_to_bin(float(input))
         output = cv.bin_to_u2(output)
+    
+    # From base-2 to base-10
+    elif (selection['from'] == 'base-2') and (selection['to'] == 'base-10'):
+        output = cv.bin_to_dec(input)
+    
+    # From base-2 to two's complement
+    elif (selection['from'] == 'base-2') and (selection['to'] == 'u2'):
+        output = cv.bin_to_u2(input)
+    
+    # From two's complement to base-2
+    elif (selection['from'] == 'u2') and (selection['to'] == 'base-2'):
+        output = cv.u2_to_dec(input)
+        output = cv.dec_to_bin(output)
+    
+    # From two's comeplement to base-10
+    elif (selection['from'] == 'u2') and (selection['to'] == 'base-10'):
+        output = cv.u2_to_dec(input)
+
+    # From one's comeplement to base-10
+    elif (selection['from'] == 'u1') and (selection['to'] == 'base-10'):
+        pass
+    
+    # From one's comeplement to base-2
+    elif (selection['from'] == 'u1') and (selection['to'] == 'base-2'):
+        pass
+    
+    # From one's comeplement to two's complement
+    elif (selection['from'] == 'u1') and (selection['to'] == 'u2'):
+        pass
+
 
     output_box.delete(1.0, tk.END)
     output_box.insert(tk.END, output)
