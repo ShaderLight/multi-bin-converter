@@ -1,6 +1,3 @@
-from os import sep
-
-
 def dec_to_bin(x, bits=5):
     x_int = int(x)
     x_frac = abs(x - x_int)
@@ -96,11 +93,22 @@ def bin_to_u2(x):
     
     return '0' + x
 
+
 def bin_to_u1(x):
     if x[0] == '-':
-        return inversion(x[1:])
+        return inversion('0' + x[1:])
 
     return '0' + x
+
+
+def u1_to_dec(x):
+    x_split = x.split('.')
+
+    try:
+        return -1 * 2 ** (len(x_split[0])) + bin_to_dec_int(x_split[0][1:]) + bin_to_dec_frac(x_split[1])
+    except IndexError:
+        return -1 * 2 ** (len(x_split[0])) + bin_to_dec_int(x_split[0][1:])
+
 
 def inversion(x):
     output = ''
