@@ -4,7 +4,7 @@ import tkinter.ttk as ttk
 import conv as cv
 
 options = ['base-2', 'base-10', 'u2']
-selection = {}
+selection = {'from': None, 'to': None}
 
 def rendergui():
     window = tk.Tk()
@@ -65,7 +65,7 @@ def get_to_input(event):
 
 def convert():
     input = digit_input.get("1.0", "end-1c")
-    output = 0
+    output = 'Invalid selection'
     if (selection['from'] == 'base-10') and (selection['to'] == 'base-2'):
         output = cv.dec_to_bin(float(input))
     elif (selection['from'] == 'base-2') and (selection['to'] == 'base-10'):

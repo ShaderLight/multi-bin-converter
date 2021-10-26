@@ -90,12 +90,17 @@ def dec_to_bin_frac(x, bits=5):
 
 def bin_to_u2(x):
     if x[0] == '-':
-        x = inversion(x[1:])
+        x = inversion('0' + x[1:])
         
         return bin_add_one_lsb(x)
     
     return '0' + x
 
+def bin_to_u1(x):
+    if x[0] == '-':
+        return inversion(x[1:])
+
+    return '0' + x
 
 def inversion(x):
     output = ''
