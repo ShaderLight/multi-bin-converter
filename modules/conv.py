@@ -12,6 +12,10 @@ def from_dec_conv(x, to_base, bits=5):
     return from_dec_conv_int(x_int, to_base) + '.' + from_dec_conv_frac(x_frac, to_base, bits)
 
 
+def to_dec_conv(x, from_base):
+    pass
+
+
 def from_dec_conv_int(x, to_base):
     output = []
 
@@ -76,3 +80,19 @@ def translate_values(x):
             x[i] = LETTERS[element - 10]
 
     return x
+
+
+def detranslate_values(x):
+    LETTERS = ('A', 'B', 'C', 'D', 'E', 'F')
+    output = []
+
+    for c in x:
+        try:
+            output.append(int(c))
+        except ValueError:
+            if c in LETTERS:
+                output.append(LETTERS.index(c) + 10)
+            else:
+                output.append(c)
+    
+    return output
