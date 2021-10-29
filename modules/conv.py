@@ -16,10 +16,16 @@ def to_dec_conv(x, from_base):
     negative = 1
     if x[0] == '-':
         negative = -1
-        x_splitted = x.split('.')
-        x_int, x_frac = x_splitted[0][1:], x_splitted[1]
+        try:
+            x_splitted = x.split('.')
+            x_int, x_frac = x_splitted[0][1:], x_splitted[1]
+        except ValueError:
+            x_int = x
     else:
-        x_int, x_frac = x.split('.')
+        try:
+            x_int, x_frac = x.split('.')
+        except ValueError:
+            x_int = x
 
     return negative * (to_dec_conv_int(x_int) + to_dec_conv_frac(x_frac))
 
@@ -34,8 +40,14 @@ def to_dec_conv_int(x, from_base):
     return output
 
 
-def to_dec_conv_frac(x):
-    pass
+def to_dec_conv_frac(x, from_base):
+    output = 0
+
+    x = detranslate_values(x)
+    for i in range(len(x)):
+        output += int(x[i]) * from_base ** (-1 - i)
+    
+    return output
 
 
 def from_dec_conv_int(x, to_base):
@@ -118,3 +130,6 @@ def detranslate_values(x):
                 output.append(c)
     
     return output
+
+
+print(to_dec_conv('FF0', 16))
