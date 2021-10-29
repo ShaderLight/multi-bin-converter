@@ -18,7 +18,6 @@ def to_dec_conv(x, from_base):
         negative = -1
         try:
             x_splitted = x.split('.')
-            print(x_splitted)
             x_int, x_frac = x_splitted[0][1:], x_splitted[1]
         except IndexError:
             x_int = x[1:]
