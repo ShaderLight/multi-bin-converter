@@ -13,6 +13,22 @@ def from_dec_conv(x, to_base, bits=5):
 
 
 def to_dec_conv(x, from_base):
+    negative = 1
+    if x[0] == '-':
+        negative = -1
+        x_splitted = x.split('.')
+        x_int, x_frac = x_splitted[0][1:], x_splitted[1]
+    else:
+        x_int, x_frac = x.split('.')
+
+    return negative * (to_dec_conv_int(x_int) + to_dec_conv_frac(x_frac))
+
+
+def to_dec_conv_int(x):
+    pass
+
+
+def to_dec_conv_frac(x):
     pass
 
 
