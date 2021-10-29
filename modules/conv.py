@@ -24,8 +24,14 @@ def to_dec_conv(x, from_base):
     return negative * (to_dec_conv_int(x_int) + to_dec_conv_frac(x_frac))
 
 
-def to_dec_conv_int(x):
-    pass
+def to_dec_conv_int(x, from_base):
+    output = 0
+
+    x = detranslate_values(x)
+    for i in range(len(x)):
+        output += int(x[i]) * from_base ** (len(x)-i-1)
+
+    return output
 
 
 def to_dec_conv_frac(x):
