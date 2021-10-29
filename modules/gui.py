@@ -70,16 +70,16 @@ def convert():
     
     # From base-10 to base-2
     if (selection['from'] == 'base-10') and (selection['to'] == 'base-2'):
-        output = cv.dec_to_bin(float(input))
+        output = cv.from_dec_conv(float(input), 2)
     
     # From base-10 to two's complement
     elif (selection['from'] == 'base-10') and (selection['to'] == 'u2'):
-        output = cv.dec_to_bin(float(input))
+        output = cv.from_dec_conv(float(input), 2)
         output = cv.bin_to_u2(output)
     
     # From base-2 to base-10
     elif (selection['from'] == 'base-2') and (selection['to'] == 'base-10'):
-        output = cv.bin_to_dec(input)
+        output = cv.to_dec_conv(input, 2)
     
     # From base-2 to two's complement
     elif (selection['from'] == 'base-2') and (selection['to'] == 'u2'):
@@ -88,7 +88,7 @@ def convert():
     # From two's complement to base-2
     elif (selection['from'] == 'u2') and (selection['to'] == 'base-2'):
         output = cv.u2_to_dec(input)
-        output = cv.dec_to_bin(output)
+        output = cv.from_dec_conv(output, 2)
     
     # From two's comeplement to base-10
     elif (selection['from'] == 'u2') and (selection['to'] == 'base-10'):
@@ -101,12 +101,12 @@ def convert():
     # From one's comeplement to base-2
     elif (selection['from'] == 'u1') and (selection['to'] == 'base-2'):
         output = cv.u1_to_dec(input)
-        output = cv.dec_to_bin(output)
+        output = cv.from_dec_conv(output, 2)
     
     # From one's comeplement to two's complement
     elif (selection['from'] == 'u1') and (selection['to'] == 'u2'):
         output = cv.u1_to_dec(input)
-        output = cv.dec_to_bin(output)
+        output = cv.from_dec_conv(output, 2)
         output = cv.bin_to_u2(output)
 
     output_box.delete(1.0, tk.END)
