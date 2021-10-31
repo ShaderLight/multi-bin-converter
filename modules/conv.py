@@ -8,9 +8,20 @@ def from_dec_conv(x, to_base, bits=5):
 
     x_frac = abs(x_frac)
 
+
     if x_frac == 0.0:
+        if to_base == 'u2':
+            return bin_to_u2(from_dec_conv_int(x, 2))
+        elif to_base == 'u1':
+            return bin_to_u1(from_dec_conv_int(x, 2))
+        
         return from_dec_conv_int(x, to_base)
     
+    if to_base == 'u2':
+        return bin_to_u2(from_dec_conv_int(x_int, 2) + '.' + from_dec_conv_frac(x_frac, 2, bits))
+    elif to_base == 'u1':
+        return bin_to_u1(from_dec_conv_int(x_int, 2) + '.' + from_dec_conv_frac(x_frac, 2, bits))
+
     return from_dec_conv_int(x_int, to_base) + '.' + from_dec_conv_frac(x_frac, to_base, bits)
 
 
@@ -56,6 +67,8 @@ def bin_to_u2(x):
 # From base-2 to u1 (one's complement)
 
 def bin_to_u1(x):
+    if '.' in x:
+        x = x.split('.')[0]
     if x[0] == '-':
         if x[1] == '1':
             return inversion('0' + x[1:])

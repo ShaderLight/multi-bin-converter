@@ -3,8 +3,8 @@ import tkinter.ttk as ttk
 
 import conv as cv
 
-options = ['base-2', 'base-10', 'u2', 'u1']
-selection = {'from': None, 'to': None}
+options = ['base-2', 'base-10', 'u2', 'u1', 'base-8', 'base-16']
+selection = {'from': None}
 
 
 def rendergui():
@@ -12,33 +12,23 @@ def rendergui():
     window.geometry('800x500')
 
     global from_box
-    global to_box
     global from_text
-    global to_text
 
     title_label = tk.Label(window, text='Binary converter')
     title_label.pack()
 
     from_text = tk.StringVar(value='From')
-    to_text = tk.StringVar(value='To')
     
     from_text.set('From')
-    to_text.set('To')
 
     from_box = ttk.Combobox(window, textvariable=from_text)
-    to_box = ttk.Combobox(window, textvariable=to_text)
 
     from_box['values'] = options
     from_box['state'] = 'readonly'
 
-    to_box['values'] = options
-    to_box['state'] = 'readonly'
-
     from_box.bind('<<ComboboxSelected>>', get_from_input)
-    to_box.bind('<<ComboboxSelected>>', get_to_input)
 
     from_box.pack(padx=5, pady=5)
-    to_box.pack(padx=5, pady=5)
 
 
     global digit_input
@@ -61,55 +51,23 @@ def rendergui():
 def get_from_input(event):
     selection['from'] = from_text.get()
 
-def get_to_input(event):
-    selection['to'] = to_text.get()
 
 def convert():
     input = digit_input.get("1.0", "end-1c")
     output = 'Invalid selection'
     
     # From base-10 to base-2
-    if (selection['from'] == 'base-10') and (selection['to'] == 'base-2'):
-        output = cv.from_dec_conv(float(input), 2)
-    
-    # From base-10 to two's complement
-    elif (selection['from'] == 'base-10') and (selection['to'] == 'u2'):
-        output = cv.from_dec_conv(float(input), 2)
-        output = cv.bin_to_u2(output)
-    
-    # From base-2 to base-10
-    elif (selection['from'] == 'base-2') and (selection['to'] == 'base-10'):
-        output = cv.to_dec_conv(input, 2)
-    
-    # From base-2 to two's complement
-    elif (selection['from'] == 'base-2') and (selection['to'] == 'u2'):
-        output = cv.bin_to_u2(input)
-    
-    # From two's complement to base-2
-    elif (selection['from'] == 'u2') and (selection['to'] == 'base-2'):
-        output = cv.u2_to_dec(input)
-        output = cv.from_dec_conv(output, 2)
-    
-    # From two's comeplement to base-10
-    elif (selection['from'] == 'u2') and (selection['to'] == 'base-10'):
-        output = cv.u2_to_dec(input)
-
-    # From one's comeplement to base-10
-    elif (selection['from'] == 'u1') and (selection['to'] == 'base-10'):
-        output = cv.u1_to_dec(input)
-    
-    # From one's comeplement to base-2
-    elif (selection['from'] == 'u1') and (selection['to'] == 'base-2'):
-        output = cv.u1_to_dec(input)
-        output = cv.from_dec_conv(output, 2)
-    
-    # From one's comeplement to two's complement
-    elif (selection['from'] == 'u1') and (selection['to'] == 'u2'):
-        output = cv.u1_to_dec(input)
-        output = cv.from_dec_conv(output, 2)
-        output = cv.bin_to_u2(output)
+    if selection['from'] != None:
+        output = generate_response(input, selection['from'])
 
     output_box.delete(1.0, tk.END)
     output_box.insert(tk.END, output)
+
+
+def generate_response(input, selection):
+    pass
+    # messages = ['base-10', 'base-2', 'u2', 'u1', 'base-8', 'base-16']
+    # del messages[selection]
+    # to be finished later
 
 rendergui()
