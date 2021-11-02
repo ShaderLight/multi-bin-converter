@@ -10,6 +10,7 @@ selection = {'from': None}
 
 def rendergui():
     window = tk.Tk()
+    window.title('multi-bin-converter')
 
     global from_text
     global bit_text
