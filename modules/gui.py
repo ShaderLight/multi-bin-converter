@@ -5,7 +5,7 @@ import tkinter.ttk as ttk
 from conv import to_dec_conv, from_dec_conv
 
 options = ['base-2', 'base-10', 'u2', 'u1', 'base-8', 'base-16']
-selection = {'from': None, 'frac_bits': 5}
+selection = {'from': None}
 
 
 def rendergui():
@@ -14,6 +14,7 @@ def rendergui():
     global from_box
     global from_text
     global bit_box
+    global bit_text
 
     title_label = tk.Label(window, text='Binary converter')
     title_label.grid(column=1, row=0, padx=5, pady=5)
@@ -25,7 +26,7 @@ def rendergui():
     bit_label.grid(column=2, row=1, padx=5, pady=5)
 
     bit_text = tk.StringVar(value='5')
-    bit_box = tk.Spinbox(window, from_=0, to=10, textvariable=bit_text)
+    bit_box = tk.Spinbox(window, from_=1, to=10, textvariable=bit_text)
     bit_box.grid(column=2, row=2, padx=5, pady=5)
 
     from_text = tk.StringVar(value='From')
@@ -45,7 +46,7 @@ def rendergui():
     global digit_input
     global bits_input
 
-    digit_input = tk.Text(window, height=2, width=20)
+    digit_input = tk.Text(window, height=1, width=20)
     digit_input.grid(column=1, row=3, padx=20, pady=20)
 
     confirm_btn = tk.Button(window, text='Convert', command=convert)
@@ -53,7 +54,7 @@ def rendergui():
 
     global output_box
 
-    output_box = tk.Text(window, height=5, width = 20)
+    output_box = tk.Text(window, height=5, width = 30)
     output_box.grid(column=1, row=4, pady=20, padx=20)
     output_box.config(state='normal')
     
@@ -77,6 +78,8 @@ def convert():
 
 
 def generate_response(input, selection):
+    bits = int(bit_text.get())
+
     messages = {'base-10': 10, 'base-2': 2, 'u2': 'u2' , 'u1': 'u1', 'base-8': 8, 'base-16': 16}
     
     input_type = messages[selection]
@@ -85,7 +88,7 @@ def generate_response(input, selection):
     for key, value in messages.items():
         if key == selection:
             continue
-        converted = from_dec_conv(to_dec_conv(input, input_type), value)
+        converted = from_dec_conv(to_dec_conv(input, input_type), value, bits)
         generated_str = key + ': ' + str(converted) + '\n'
         output += generated_str
 
