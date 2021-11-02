@@ -5,18 +5,28 @@ import tkinter.ttk as ttk
 from conv import to_dec_conv, from_dec_conv
 
 options = ['base-2', 'base-10', 'u2', 'u1', 'base-8', 'base-16']
-selection = {'from': None}
+selection = {'from': None, 'frac_bits': 5}
 
 
 def rendergui():
     window = tk.Tk()
-    window.geometry('800x500')
 
     global from_box
     global from_text
+    global bit_box
 
     title_label = tk.Label(window, text='Binary converter')
-    title_label.pack()
+    title_label.grid(column=1, row=0, padx=5, pady=5)
+
+    from_label = tk.Label(window, text = 'From base')
+    from_label.grid(column=0, row=1, padx=5, pady=5)
+
+    bit_label = tk.Label(window, text='Fractional bits')
+    bit_label.grid(column=2, row=1, padx=5, pady=5)
+
+    bit_text = tk.StringVar(value='5')
+    bit_box = tk.Spinbox(window, from_=0, to=10, textvariable=bit_text)
+    bit_box.grid(column=2, row=2, padx=5, pady=5)
 
     from_text = tk.StringVar(value='From')
     
@@ -29,21 +39,22 @@ def rendergui():
 
     from_box.bind('<<ComboboxSelected>>', get_from_input)
 
-    from_box.pack(padx=5, pady=5)
+    from_box.grid(column=0, row=2, padx=5, pady=5)
 
 
     global digit_input
+    global bits_input
 
     digit_input = tk.Text(window, height=2, width=20)
-    digit_input.pack()
+    digit_input.grid(column=1, row=3, padx=20, pady=20)
 
     confirm_btn = tk.Button(window, text='Convert', command=convert)
-    confirm_btn.pack()
+    confirm_btn.grid(column=1, row=5, padx=5, pady=20)
 
     global output_box
 
     output_box = tk.Text(window, height=5, width = 20)
-    output_box.pack(padx=10, pady=20)
+    output_box.grid(column=1, row=4, pady=20, padx=20)
     output_box.config(state='normal')
     
     window.mainloop()
