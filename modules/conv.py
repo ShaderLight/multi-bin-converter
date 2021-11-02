@@ -42,6 +42,11 @@ def to_dec_conv(x, from_base):
         except ValueError:
             x_int = x
 
+    if from_base == 'u1':
+        return u1_to_dec(x_int)
+    elif from_base == 'u2':
+        return u2_to_dec(x)
+
     try:
         return negative * (to_dec_conv_int(x_int, from_base) + to_dec_conv_frac(x_frac, from_base))
     except UnboundLocalError:
@@ -86,9 +91,9 @@ def u2_to_dec(x):
     x_split = x.split('.')
 
     try:
-        return -1 * 2 ** (len(x_split[0]) - 1) * int(x_split[0][0]) + to_dec_conv(x_split[0][1:], 2) + to_dec_conv(x_split[1], 2)
+        return -1 * 2 ** (len(x_split[0]) - 1) * int(x_split[0][0]) + to_dec_conv_int(x_split[0][1:], 2) + to_dec_conv_frac(x_split[1], 2)
     except IndexError:
-        return -1 * 2 ** (len(x_split[0]) - 1) * int(x_split[0][0]) + to_dec_conv(x_split[0][1:], 2)
+        return -1 * 2 ** (len(x_split[0]) - 1) * int(x_split[0][0]) + to_dec_conv_int(x_split[0][1:], 2)
 
 
 # From u1 (one's comeplement) function
@@ -109,6 +114,7 @@ def to_dec_conv_int(x, from_base):
     output = 0
 
     x = detranslate_values(x)
+
     for i in range(len(x)):
         output += int(x[i]) * from_base ** (len(x)-i-1)
 

@@ -1,7 +1,8 @@
 import tkinter as tk
 import tkinter.ttk as ttk
 
-import conv as cv
+
+from conv import to_dec_conv, from_dec_conv
 
 options = ['base-2', 'base-10', 'u2', 'u1', 'base-8', 'base-16']
 selection = {'from': None}
@@ -41,7 +42,7 @@ def rendergui():
 
     global output_box
 
-    output_box = tk.Text(window, height=2, width = 20)
+    output_box = tk.Text(window, height=5, width = 20)
     output_box.pack(padx=10, pady=20)
     output_box.config(state='normal')
     
@@ -65,9 +66,19 @@ def convert():
 
 
 def generate_response(input, selection):
-    pass
-    # messages = ['base-10', 'base-2', 'u2', 'u1', 'base-8', 'base-16']
-    # del messages[selection]
-    # to be finished later
+    messages = {'base-10': 10, 'base-2': 2, 'u2': 'u2' , 'u1': 'u1', 'base-8': 8, 'base-16': 16}
+    
+    input_type = messages[selection]
+
+    output = ''
+    for key, value in messages.items():
+        if key == selection:
+            continue
+        converted = from_dec_conv(to_dec_conv(input, input_type), value)
+        generated_str = key + ': ' + str(converted) + '\n'
+        output += generated_str
+
+    return output
+
 
 rendergui()
